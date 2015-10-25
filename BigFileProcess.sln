@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigFileProcess", "BigFileProcess\BigFileProcess.csproj", "{808FA2C8-EEBF-4C47-AC74-8F7BBCDA24E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigFileProcess_Server", "BigFileProcess\BigFileProcess_Server.csproj", "{808FA2C8-EEBF-4C47-AC74-8F7BBCDA24E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigFileProsess_Client", "BigFileProsess_Client\BigFileProsess_Client.csproj", "{66C3D634-1D27-44FA-B23B-40CBAAC53077}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{808FA2C8-EEBF-4C47-AC74-8F7BBCDA24E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808FA2C8-EEBF-4C47-AC74-8F7BBCDA24E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{808FA2C8-EEBF-4C47-AC74-8F7BBCDA24E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66C3D634-1D27-44FA-B23B-40CBAAC53077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66C3D634-1D27-44FA-B23B-40CBAAC53077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66C3D634-1D27-44FA-B23B-40CBAAC53077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66C3D634-1D27-44FA-B23B-40CBAAC53077}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
