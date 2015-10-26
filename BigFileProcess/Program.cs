@@ -136,7 +136,7 @@ namespace BigFileProcess
                     {
                         string[] result = recieved.Split(':');
                         angr_mutex.WaitOne();
-                        annagrams.setValues(Convert.ToInt32(result[0]), result[1]);                       
+                        annagrams.setValues(Convert.ToInt32(result[0]), result[1]);                 
                         angr_mutex.ReleaseMutex();
 
                         Array.Clear(result, 0, result.Length);
@@ -163,7 +163,11 @@ namespace BigFileProcess
                     {
                         SendBytes = Encoding.ASCII.GetBytes("closed -1");
 
+                        proc_mutex.WaitOne();
                         stream.Write(SendBytes, 0, SendBytes.Length);
+                        proc_mutex.ReleaseMutex();
+
+                        annagrams.DownloadToFile(@"C:\Architect\analyse.txt"); //передаем путь к файлу, куда выводим найденный аннаграмы
                     }
                 }
             }
@@ -176,8 +180,7 @@ namespace BigFileProcess
                     try
                     {
                         string task_str = "";
-                        Encoding enc = Encoding.GetEncoding(1251);
-                        sr = new StreamReader(fileFrom, enc);
+                        sr = new StreamReader(fileFrom, Encoding.Default); //для Windows справедливо как Default т.е 1251 , так и utf-8.
                         while (sr.Peek() >= 0)
                         {
                             task_str = sr.ReadLine();
@@ -200,6 +203,11 @@ namespace BigFileProcess
                         }
                     }
                 }
+            }
+
+            private void ToFileDownloader()
+            {      
+                annagrams.DownloadToFile(@"C:\Architect\analyse.txt");  
             }
 
             ~Generator()
@@ -278,11 +286,10 @@ namespace BigFileProcess
         {
             if (table.Count != 0)
             {
-                Encoding enc = Encoding.GetEncoding(1251);
                 StreamWriter sw = null;
                 try
                 {
-                    sw = new StreamWriter(output, false, enc);
+                    sw = new StreamWriter(output, false, Encoding.Default);
                     foreach (KeyValuePair<int, LinkedList<string>> cur in table)
                     {
                         if (cur.Value.Count() >= 1)
