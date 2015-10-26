@@ -58,7 +58,7 @@ namespace BigFileProsess_Client
             int i = 0;
             foreach (byte b in array)
             {
-                if (b != '\0' && b!= '\n')
+                if (b != '\0')
                 {
                     i++;
                 }
@@ -67,7 +67,7 @@ namespace BigFileProsess_Client
             i = 0;
             foreach (byte b in array)
             {
-                if (b != '\0' && b!= '\n')
+                if (b != '\0')
                 {
                     cur[i] = b;
                     i++;

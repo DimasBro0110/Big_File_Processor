@@ -12,10 +12,6 @@ namespace BigFileProcess
 {
     class Program
     {
-        class Task_To_Do
-        {
-
-        }
 
         class Generator
         {
@@ -67,7 +63,7 @@ namespace BigFileProcess
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Client Disconnected \n{0}", ex);
+                    Console.WriteLine("Client Disconnected");
                     if (stream != null)
                     {
                         stream.Dispose();
@@ -87,7 +83,7 @@ namespace BigFileProcess
                 int i = 0;
                 foreach (byte b in array)
                 {
-                    if (b != '\0' && b != '\n')
+                    if (b != '\0')
                     {
                         i++;
                     }
@@ -96,7 +92,7 @@ namespace BigFileProcess
                 i = 0;
                 foreach (byte b in array)
                 {
-                    if (b != '\0' && b != '\n')
+                    if (b != '\0')
                     {
                         cur[i] = b;
                         i++;
@@ -217,7 +213,35 @@ namespace BigFileProcess
             int max = Environment.ProcessorCount * 2;
             ThreadPool.SetMaxThreads(max, max);
             ThreadPool.SetMinThreads(2, 2);
-            new Generator(@"C:\Architect\file.txt");
+            if (args.Length > 0)
+            {
+                if (File.Exists(args[0]))
+                {
+                    new Generator(args[0]);
+                }
+                else
+                {
+                    string input_file = "";
+                    do
+                    {
+                        Console.WriteLine("Введите путь к обрабатываемому файлу : ");
+                        input_file = Console.ReadLine();
+                    }
+                    while (!File.Exists(input_file));
+                    new Generator(input_file);
+                } 
+            }
+            else
+            {
+                string input_file = "";
+                do
+                {
+                    Console.WriteLine("Введите путь к обрабатываемому файлу : ");
+                    input_file = Console.ReadLine();
+                }
+                while (!File.Exists(input_file));
+                new Generator(input_file);
+            }
             Console.ReadKey();
         }
     }
@@ -231,6 +255,11 @@ namespace BigFileProcess
             table = new Dictionary<int, LinkedList<string>>();
         }
 
+        public int size()
+        {
+            return table.Count;
+        }        
+    
         public void setValues(int hash, string word)
         {
             if (this.table.ContainsKey(hash))
@@ -242,6 +271,41 @@ namespace BigFileProcess
                 LinkedList<string> lst = new LinkedList<string>();
                 lst.AddLast(word);
                 this.table.Add(hash, lst);
+            }
+        }
+
+        public void DownloadToFile(string output)
+        {
+            if (table.Count != 0)
+            {
+                Encoding enc = Encoding.GetEncoding(1251);
+                StreamWriter sw = null;
+                try
+                {
+                    sw = new StreamWriter(output, false, enc);
+                    foreach (KeyValuePair<int, LinkedList<string>> cur in table)
+                    {
+                        if (cur.Value.Count() >= 1)
+                        {
+                            foreach (string word in cur.Value)
+                            {
+                                sw.Write(word + " ");
+                            }
+                            sw.WriteLine();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+                finally
+                {
+                    if (sw != null)
+                    {
+                        sw.Dispose();
+                        sw.Close();
+                    }
+                }
             }
         }
     }
